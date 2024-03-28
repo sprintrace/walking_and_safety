@@ -185,41 +185,45 @@ names(Health) <- c("Year", "Excellent", "Good","Fair")
 ##  4
 
 Age <- Age |>
-  slice(7:10)
+  slice(7:11)
 Age[1,1]<-"Year"
 names(Age)[1]<-"C1"
 
 ## New line
-#names(RaceAndGunlaw)[1]<-"Year"
-#names(RaceAndGunlaw)[2]<-"White"
-#names(RaceAndGunlaw)[3]<-"Black"
-#names(RaceAndGunlaw)[4]<-"Other"
 
 #### PIVOT LONGER ####
 
 Age <- Age[-1] |> t() |> as.data.frame()
-names(Age) <- c("Year", "White", "Black", "Other")
+names(Age) <- c("Year", "18-34", "35-49", "50-64", "65+")
 
+#CoPilot code
+###   colnames(Age) <- c("Year", "18-34", "35-49", "50-64", "65+")
 
 ##### New lines to fix the num in brackets #####
 
-Age$'White' <- sapply(Age$'White', function(x) { gsub("[\r\n]", "", x) })
-Age[c('White',' ')] <- str_split_fixed(Age$'White', ' ', 2)  # Assuming space separates values
+Age$'18-34' <- sapply(Age$'18-34', function(x) { gsub("[\r\n]", "", x) })
+Age[c('18-34',' ')] <- str_split_fixed(Age$'18-34', ' ', 2)  # Assuming space separates values
 
-# BLACK
+# 35-49
 
-Age$'Black' <- sapply(Age$'Black', function(x) { gsub("[\r\n]", "", x) })
-Age[c('Black',' ')] <- str_split_fixed(Age$'Black', ' ', 2)  # Assuming space separates values
+Age$'35-49' <- sapply(Age$'35-49', function(x) { gsub("[\r\n]", "", x) })
+Age[c('35-49',' ')] <- str_split_fixed(Age$'35-49', ' ', 2)  # Assuming space separates values
 
-# Others
+# 50-64
 
-Age$'Other' <- sapply(Age$'Other', function(x) { gsub("[\r\n]", "", x) })
-Age[c('Other',' ')] <- str_split_fixed(Age$'Other', ' ', 2)  # Assuming space separates values
+Age$'50-64' <- sapply(Age$'50-64', function(x) { gsub("[\r\n]", "", x) })
+Age[c('50-64',' ')] <- str_split_fixed(Age$'50-64', ' ', 2)  # Assuming space separates values
+
+
+# 65+
+
+Age$'65+' <- sapply(Age$'65+', function(x) { gsub("[\r\n]", "", x) })
+Age[c('65+',' ')] <- str_split_fixed(Age$'65+', ' ', 2)  # Assuming space separates values
 
 
 #### remove the unwanted collumbs ####
 Age <- Age |>
-  select(c("Year","White","Black","Other"))
+  select(c("Year","18-34","35-49","50-64", "65+"))
 
 ### LINE IS REDUNDANT
 #names(RaceAndGunlaw) <- c("Year", "White", "Black", "Other")
