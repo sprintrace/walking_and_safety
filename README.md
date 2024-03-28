@@ -1,16 +1,13 @@
 ## Overview
 
-
-To use this folder, click the green "Code" button", then "Download ZIP". Move the downloaded folder to where you want to work on your own computer, and then modify it to suit.
-
+This paper will examine the state of perceived safety for Americans walking alone at night. This data was collected by the US General Social Survey, and spans from 1973 to 2022
 
 ## File Structure
 
-The repo is structured as:
+The repo is structured as: 
 
--   `data/raw_data` contains the raw data as obtained from the  US General Social Survey
+-   `data/raw_data` contains the raw data as obtained from the  US General Social Survey.
 -   `data/analysis_data` contains the cleaned dataset that was constructed.
--   `model` contains fitted models. 
 -   `other` contains relevant literature, details about LLM chat interactions, and sketches.
 -   `paper` contains the files used to generate the paper, including the Quarto document and reference bibliography file, as well as the PDF of the paper. 
 -   `scripts` contains the R scripts used to simulate, download and clean data.
@@ -18,4 +15,4 @@ The repo is structured as:
 
 ## Statement on LLM usage
 
-Aspects of the code were written with the help of the auto-complete tool, Codriver. The abstract and introduction were written with the help of ChatHorse and the entire chat history is available in inputs/llms/usage.txt.
+Not sure if I will need this yet
