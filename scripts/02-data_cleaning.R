@@ -1,128 +1,316 @@
 #### Preamble ####
-# Purpose: Cleans the raw plane data recorded by two observers..... [...UPDATE THIS...]
-# Author: Rohan Alexander [...UPDATE THIS...]
-# Date: 6 April 2023 [...UPDATE THIS...]
-# Contact: rohan.alexander@utoronto.ca [...UPDATE THIS...]
-# License: MIT
-# Pre-requisites: [...UPDATE THIS...]
-# Any other information needed? [...UPDATE THIS...]
+# Purpose: collect and analyze the data from the US General Survey
+# Author: 
+# Date: 
+# Contact: 
+# License: 
+# Pre-requisites: 
+
+#### Simulate data ####
+
+## random number generating code from class
+
+#   tibble(
+#   certianty = runif(n = 1000, min = 0, max = 11)|> floor(),
+#   guess_correct = runif(n=1000, min = 0, max = 2)|> floor(),
+#   )
+
+#   expect that guessed_correct is only ever 0 or 1.
+
+#   expect that certianty is only ever an integer of 0 to 10, inclusive
+#   max(simulated_data$certianty) == 10
+#   min(simulated_data$certianty) == 0
+#   any(unique(simulated_data$certianty)== c(0:10)) 
+
+###################################################################################################
+###################################################################################################
+
 
 library(tidyr)
 library(tidyverse)
 library(here)
 library(ggplot2)
 library(readr) 
+library(readxl)
+library(arrow)
 
 
-#1    GGPlot for GunLaw (the total of all Americans in survey)
-Gunlaw <- read_csv("data/analysis_data/Gunlaw.csv")
-View(Gunlaw)
+#### Clean data ####
+#### get from excel
 
-transform(Gunlaw, 'Total Americans in Favour' = as.numeric('Total Americans in Favour')) 
+#1
+fear.xlsx <- read_excel("data/raw_data/fear.xlsx")
+View(fear.xlsx)
 
-names(Gunlaw) <- c("Year", "Total")
-
-ggplot(data=Gunlaw, aes(x = Year, y = Total, group = 1)) +
-  geom_line()+
-  labs(title = "Percentage of Americans in favour of police backed gun permits", y = "Total % of Americans in favour")
-
-
-
-
-#2    GGPlot for Gender
-## load in CSV ##
-Gender <- read_csv("data/analysis_data/Gender.csv")
+#2
+Gender <- read_excel("data/raw_data/Gender.xlsx")
 View(Gender)
 
-## create ggplot ##
+#3
+Health <- read_excel("data/raw_data/Health.xlsx")
+View(Health)  
 
-### turn strings into numbers
-transform(Gender, 'Female' = as.numeric('Female')) 
-transform(Gender, 'Male' = as.numeric('Male')) 
+#4
+Age <- read_excel("data/raw_data/Age.xlsx")
+View(Age)  
 
-####Make 2 columns side by side into two values in one column one above the other (turn data into long format)
+#5
+Race <- read_excel("data/raw_data/Race.xlsx")
+View(Race)  
+
+
+
+################################################ Repeat 32 - 42 for the other excel files
+#### Tidy up Data ####
+
+##  1
+
+fear.xlsx <- fear.xlsx |> 
+  slice(7:8)
+fear.xlsx[1,1]<-"Year"
+names(fear.xlsx)[1]<-"C1"
+
+#### PIVOT LONGER ####
+
+fear.xlsx <- fear.xlsx[-1] |> t() |> as.data.frame()
+
+
+####continue 
+names(fear.xlsx) <- c("Year", "Total Americans in Favour")
+
+##### new lines to fix the num in brackets #####
+
+fear.xlsx$'Total Americans in Favour' <- sapply(fear.xlsx$'Total Americans in Favour', function(x) { gsub("[\r\n]", "", x) })
+
+fear.xlsx[c('Total','Y')] <- str_split_fixed(fear.xlsx$'Total Americans in Favour', ' ', 2)
+
+fear.xlsx <- fear.xlsx |>
+  select(c("Year", "Total"))
+
+names(fear.xlsx) <- c("Year", "Total Americans in Favour")
+
+
+
+
+
+
+##  2
+
 Gender <- Gender |> 
-  pivot_longer(cols=c('Female', 'Male'), names_to='Gender', values_to='Total')
-###### MAKE THE PLOT #######
-ggplot(data=Gender, aes(x = Year, y=Total, group = Gender)) +
-  geom_line(aes(colour=Gender))+
-  labs(title = "Percentage of American Women vs Men \n in favour of police backed gun permits", y = "Total % in favour")
+  slice(7:9)
+
+
+
+#### PIVOT LONGER #### 
+
+Gender <- Gender[-1] |> t() |> as.data.frame()
+
+names(Gender)[1]<-"Year"
+names(Gender)[2]<-"Female"
+names(Gender)[3]<-"Male"
+
+##### new lines to fix the num in brackets #####
+
+Gender$'Female' <- sapply(Gender$'Female', function(x) { gsub("[\r\n]", "", x) })
+
+Gender[c('F','Y')] <- str_split_fixed(Gender$'Female', ' ', 2)
+
+#### Male Data () removal
+
+Gender$'Male' <- sapply(Gender$'Male', function(x) { gsub("[\r\n]", "", x) })
+
+Gender[c('M','YY')] <- str_split_fixed(Gender$'Male', ' ', 2)
+
+#### remove the unwanted collumbs ####
+Gender <- Gender |>
+  select(c("Year", "F", "M"))
+
+names(Gender) <- c("Year", "Female", "Male")  
 
 
 
 
+##  3
 
-#3    GGPlot for Health
-
-## load in CSV ##
-Health <- read_csv("data/analysis_data/Health.csv")
-View(Health)
-
-## create ggplot ##
-
-### turn strings into numbers
-transform(Health, 'Degree or Higher' = as.numeric('Degree or Higher')) 
-transform(Health, 'Highschool' = as.numeric('Highschool')) 
-transform(Health, 'No Highschool' = as.numeric('No Highschool')) 
-transform(Health, 'No Highschool' = as.numeric('No Highschool')) 
-
-
-####Make 2 columns side by side into two values in one column one above the other (turn data into long format)
 Health <- Health |> 
-  pivot_longer(cols=c('Degree or Higher', 'Highschool', 'No Highschool'), names_to='Education', values_to='Total')
-###### MAKE THE PLOT #######
-ggplot(data=Health, aes(x = Year, y=Total, group = Education)) +
-  geom_line(aes(colour=Education))+
-  labs(title = "Percentage of Americans in favour of police \n backed gun permits based on higest level of education", y = "Total % in favour")
+  slice(7:11)
+Health[1,1]<-"Year"
+names(Health)[1]<-"C1"
+
+#### PIVOT LONGER ####
+
+## new line
+
+names(Health)[1]<-"Year"
+names(Health)[2]<-"Excellent"
+names(Health)[3]<-"Good"
+names(Health)[4]<-"Fair"
+names(Health)[5]<-"Poor"
+#### old lines
+
+Health <- Health[-1] |> t() |> as.data.frame()
+
+names(Health) <- c("Year", "Excellent", "Good","Fair", "Poor")
+
+
+
+##### new lines to fix the num in brackets #####
+
+Health$'Excellent' <- sapply(Health$'Excellent', function(x) { gsub("[\r\n]", "", x) })
+
+Health[c('D','extra')] <- str_split_fixed(Health$'Excellent', ' ', 2)
+
+## Good health
+
+Health$'Good' <- sapply(Health$'Good', function(x) { gsub("[\r\n]", "", x) })
+
+Health[c('High','extra2')] <- str_split_fixed(Health$'Good', ' ', 3)
+
+## Fair health 
+
+
+Health$'Fair' <- sapply(Health$'Fair', function(x) { gsub("[\r\n]", "", x) })
+
+Health[c('NoH','extra3')] <- str_split_fixed(Health$'Fair', ' ', 4)
+
+
+## Poor health
+
+
+Health$'Poor' <- sapply(Health$'Poor', function(x) { gsub("[\r\n]", "", x) })
+
+Health[c('NoH3','extra32')] <- str_split_fixed(Health$'Poor', ' ', 5)
+
+
+#### remove the unwanted collumbs ####
+Health <- Health |>
+  select(c("Year","D","High","NoH","NoH3"))
+
+names(Health) <- c("Year", "Excellent", "Good","Fair","Poor")  
 
 
 
 
-#4    GGPlot for Age
-
-
-## load in CSV ##
-GunlawRepVsDem.csv <- read_csv("data/analysis_data/GunlawRepVsDem.csv")
-View(GunlawRepVsDem.csv)
-
-## create ggplot ##
-
-### turn strings into numbers
-transform(GunlawRepVsDem.csv, 'Democrats' = as.numeric('Democrats')) 
-transform(GunlawRepVsDem.csv, 'Republicans' = as.numeric('Republicans')) 
-transform(GunlawRepVsDem.csv, 'Other/Non-affiliated' = as.numeric('Other/Non-affiliated')) 
-
-
-####Make 2 columns side by side into two values in one column one above the other (turn data into long format)
-GunlawRepVsDem.csv <- GunlawRepVsDem.csv |> 
-  pivot_longer(cols=c('Democrats', 'Republicans', 'Other/Non-affiliated'), names_to='Party', values_to='Total')
-###### MAKE THE PLOT #######
-ggplot(data=GunlawRepVsDem.csv, aes(x = Year, y=Total, group = Party)) +
-  geom_line(aes(colour=Party))+
-  labs(title = "Americans in favour of police backed gun permits \n based on political affiliation", y = "Total % in favour")
 
 
 
 
 
-#5    GGPlot for Race
-
-## load in CSV ##
-Race <- read_csv("data/analysis_data/Race.csv")
-View(Race)
-
-## create ggplot ## 
-
-### turn strings into numbers
-transform(Race, 'White' = as.numeric('White')) 
-transform(Race, 'Black' = as.numeric('Black')) 
-transform(Race, 'Other' = as.numeric('Other')) 
 
 
-####Make 2 columns side by side into two values in one column one above the other (turn data into long format)
-Race <- Race |> 
-  pivot_longer(cols=c('White', 'Black', 'Other'), names_to='Race', values_to='Total')
-###### MAKE THE PLOT #######
-ggplot(data=Race, aes(x = Year, y=Total, group = Race)) +
-  geom_line(aes(colour=Race))+
-  labs(title = "Americans in favour of police backed \n gun permits based on racial identity", y = "Total % in favour")
+
+
+
+
+
+##  4
+
+Age <- Age |>
+  slice(7:11)
+Age[1,1]<-"Year"
+names(Age)[1]<-"C1"
+
+## New line
+
+#### PIVOT LONGER ####
+
+Age <- Age[-1] |> t() |> as.data.frame()
+names(Age) <- c("Year", "18-34", "35-49", "50-64", "65+")
+
+#CoPilot code
+###   colnames(Age) <- c("Year", "18-34", "35-49", "50-64", "65+")
+
+##### New lines to fix the num in brackets #####
+
+Age$'18-34' <- sapply(Age$'18-34', function(x) { gsub("[\r\n]", "", x) })
+Age[c('18-34',' ')] <- str_split_fixed(Age$'18-34', ' ', 2)  # Assuming space separates values
+
+# 35-49
+
+Age$'35-49' <- sapply(Age$'35-49', function(x) { gsub("[\r\n]", "", x) })
+Age[c('35-49',' ')] <- str_split_fixed(Age$'35-49', ' ', 2)  # Assuming space separates values
+
+# 50-64
+
+Age$'50-64' <- sapply(Age$'50-64', function(x) { gsub("[\r\n]", "", x) })
+Age[c('50-64',' ')] <- str_split_fixed(Age$'50-64', ' ', 2)  # Assuming space separates values
+
+
+# 65+
+
+Age$'65+' <- sapply(Age$'65+', function(x) { gsub("[\r\n]", "", x) })
+Age[c('65+',' ')] <- str_split_fixed(Age$'65+', ' ', 2)  # Assuming space separates values
+
+
+#### remove the unwanted collumbs ####
+Age <- Age |>
+  select(c("Year","18-34","35-49","50-64", "65+"))
+
+### LINE IS REDUNDANT
+#names(RaceAndGunlaw) <- c("Year", "White", "Black", "Other")
+
+
+
+
+
+
+
+##  5
+
+Race <- Race |>
+  slice(7:10)
+Race[1,1]<-"Year"
+names(Race)[1]<-"C1"
+
+## New line
+#names(RaceAndGunlaw)[1]<-"Year"
+#names(RaceAndGunlaw)[2]<-"White"
+#names(RaceAndGunlaw)[3]<-"Black"
+#names(RaceAndGunlaw)[4]<-"Other"
+
+#### PIVOT LONGER ####
+
+Race <- Race[-1] |> t() |> as.data.frame()
+names(Race) <- c("Year", "White", "Black", "Other")
+
+
+##### New lines to fix the num in brackets #####
+
+Race$'White' <- sapply(Race$'White', function(x) { gsub("[\r\n]", "", x) })
+Race[c('White',' ')] <- str_split_fixed(Race$'White', ' ', 2)  # Assuming space separates values
+
+# BLACK
+
+Race$'Black' <- sapply(Race$'Black', function(x) { gsub("[\r\n]", "", x) })
+Race[c('Black',' ')] <- str_split_fixed(Race$'Black', ' ', 2)  # Assuming space separates values
+
+# Others
+
+Race$'Other' <- sapply(Race$'Other', function(x) { gsub("[\r\n]", "", x) })
+Race[c('Other',' ')] <- str_split_fixed(Race$'Other', ' ', 2)  # Assuming space separates values
+
+
+#### remove the unwanted collumbs ####
+Race <- Race |>
+  select(c("Year","White","Black","Other"))
+
+### LINE IS REDUNDANT
+#names(RaceAndGunlaw) <- c("Year", "White", "Black", "Other")
+
+
+
+
+
+
+
+
+#### Save data #### 
+
+####################### MUST BE PARQUET FILE NOW ##
+
+# Write to Parquet format
+write_parquet(fear, "data/analysis_data/fear.parquet")
+write_parquet(Gender, "data/analysis_data/Gender.parquet")
+write_parquet(Health, "data/analysis_data/Health.parquet")
+write_parquet(Age, "data/analysis_data/Age.parquet")
+write_parquet(Race, "data/analysis_data/Race.parquet")

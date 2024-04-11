@@ -132,7 +132,7 @@ names(Gender) <- c("Year", "Female", "Male")
 ##  3
 
 Health <- Health |> 
-  slice(7:10)
+  slice(7:11)
 Health[1,1]<-"Year"
 names(Health)[1]<-"C1"
 
@@ -144,11 +144,12 @@ names(Health)[1]<-"Year"
 names(Health)[2]<-"Excellent"
 names(Health)[3]<-"Good"
 names(Health)[4]<-"Fair"
+names(Health)[5]<-"Poor"
 #### old lines
 
 Health <- Health[-1] |> t() |> as.data.frame()
 
-names(Health) <- c("Year", "Excellent", "Good","Fair")
+names(Health) <- c("Year", "Excellent", "Good","Fair", "Poor")
 
 
 
@@ -158,14 +159,13 @@ Health$'Excellent' <- sapply(Health$'Excellent', function(x) { gsub("[\r\n]", ""
 
 Health[c('D','extra')] <- str_split_fixed(Health$'Excellent', ' ', 2)
 
-##### repeat Line 122 - 124 with other variables #####
-## Highschool
+## Good health
 
 Health$'Good' <- sapply(Health$'Good', function(x) { gsub("[\r\n]", "", x) })
 
 Health[c('High','extra2')] <- str_split_fixed(Health$'Good', ' ', 3)
 
-## no Highschool
+## Fair health 
 
 
 Health$'Fair' <- sapply(Health$'Fair', function(x) { gsub("[\r\n]", "", x) })
@@ -173,11 +173,31 @@ Health$'Fair' <- sapply(Health$'Fair', function(x) { gsub("[\r\n]", "", x) })
 Health[c('NoH','extra3')] <- str_split_fixed(Health$'Fair', ' ', 4)
 
 
+## Poor health
+
+
+Health$'Poor' <- sapply(Health$'Poor', function(x) { gsub("[\r\n]", "", x) })
+
+Health[c('NoH3','extra32')] <- str_split_fixed(Health$'Poor', ' ', 5)
+
+
 #### remove the unwanted collumbs ####
 Health <- Health |>
-  select(c("Year","D","High","NoH"))
+  select(c("Year","D","High","NoH","NoH3"))
 
-names(Health) <- c("Year", "Excellent", "Good","Fair")  
+names(Health) <- c("Year", "Excellent", "Good","Fair","Poor")  
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -286,18 +306,18 @@ Race <- Race |>
 #### Save data #### 
 
 ####################### MUST BE PARQUET FILE NOW ##
+library(arrow)
 
+# Read your CSV files
+fear <- read.csv("data/analysis_data/fear.csv")
+Gender <- read.csv("data/analysis_data/Gender.csv")
+Health <- read.csv("data/analysis_data/Health.csv")
+Age <- read.csv("data/analysis_data/Age.csv")
+Race <- read.csv("data/analysis_data/Race.csv")
 
-write_csv(fear, "data/analysis_data/fear.csv") ### error code Error: object 'fear' not found
-
-write_csv(Gender, "data/analysis_data/Gender.csv")
-
-write_csv(Health, "data/analysis_data/Health.csv")
-
-write_csv(Age, "data/analysis_data/Age.csv")
-
-write_csv(Race, "data/analysis_data/Race.csv")
-
-
-
-
+# Write to Parquet format
+write_parquet(fear, "data/analysis_data/fear.parquet")
+write_parquet(Gender, "data/analysis_data/Gender.parquet")
+write_parquet(Health, "data/analysis_data/Health.parquet")
+write_parquet(Age, "data/analysis_data/Age.parquet")
+write_parquet(Race, "data/analysis_data/Race.parquet")
