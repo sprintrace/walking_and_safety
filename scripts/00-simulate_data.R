@@ -62,7 +62,6 @@ head(simulated_age_data)
 
 
 
-
 ##5 simulate Health data
 
 set.seed(853)
