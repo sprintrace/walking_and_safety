@@ -15,7 +15,6 @@ library(readr)
 
 
 
-
 ####################################      THIS IS THE FILE WE WILL USE FOR GRAPHS     ####################
 
 
@@ -39,15 +38,21 @@ ggplot(data=fear, aes(x = Year, y = Total, group = 1)) +
 
 
 #2    GGPlot for Gender
-## load in CSV ##
-Gender <- read_csv("data/analysis_data/Gender.csv")
+## load in parquet ##
+Gender <- read_parquet("data/analysis_data/Gender.parquet")
 View(Gender)
+# View the first few rows of the dataset
+head(Gender)
 
-## create ggplot ##
+# Convert the 'Female' and 'Male' columns to numeric using dplyr for better readability and efficiency
+Gender <- Gender %>%
+  mutate(Female = as.numeric(Female),
+         Male = as.numeric(Male))
 
-### turn strings into numbers
-transform(Gender, 'Female' = as.numeric('Female')) 
-transform(Gender, 'Male' = as.numeric('Male')) 
+# Check if the columns are numeric
+is.numeric(Gender$Female) # Should return TRUE
+is.numeric(Gender$Male)   # Should return TRUE
+
 
 ####Make 2 columns side by side into two values in one column one above the other (turn data into long format)
 Gender <- Gender |> 
@@ -63,84 +68,150 @@ ggplot(data=Gender, aes(x = Year, y=Total, group = Gender)) +
 
 #3    GGPlot for Health ////////////////////// Not Currently Working
 
-## load in CSV ##
-Health <- read_csv("data/analysis_data/Health.csv")
-View(Health)
 
-## create ggplot ##
+# Read the data
+Health <- read_parquet("data/analysis_data/Health.parquet")
 
-### turn strings into numbers
-transform(Health, 'Excellent' = as.numeric('Excellent')) 
-transform(Health, 'Good' = as.numeric('Good')) 
-transform(Health, 'Fair' = as.numeric('Fair')) 
-transform(Health, 'Poor' = as.numeric('Poor')) 
+# View the first few rows of the dataset
+head(Health)
 
+# Convert the health category columns to numeric and include tests to check the conversion
+Health <- Health %>%
+  mutate(
+    Excellent = as.numeric(Excellent),
+    Good = as.numeric(Good),
+    Fair = as.numeric(Fair),
+    Poor = as.numeric(Poor)
+  ) %>%
+  # Include tests after the transformation
+  mutate(
+    Excellent_is_numeric = is.numeric(Excellent),
+    Good_is_numeric = is.numeric(Good),
+    Fair_is_numeric = is.numeric(Fair),
+    Poor_is_numeric = is.numeric(Poor)
+  )
 
+# Check the results of the tests
+print(Health$Excellent_is_numeric) # test
+print(Health$Good_is_numeric)      # test
+print(Health$Fair_is_numeric)      # test
+print(Health$Poor_is_numeric)      # test
 
-####Make 2 columns side by side into two values in one column one above the other (turn data into long format)
-Health <- Health |> 
-  pivot_longer(cols=c('Excellent', 'Good', 'Fair','Poor'), names_to='Healthy', values_to='Total')
-###### MAKE THE PLOT #######
-ggplot(data=Health, aes(x = Year, y=Total, group = Healthy)) +
-  geom_line(aes(colour=Healthy))+
-  labs(title = "Percentage of Americans who fear walking alone at night \ based on their physical health", y = "% of population")
+# Remove the test columns before plotting
+Health <- Health %>%
+  select(-c(Excellent_is_numeric, Good_is_numeric, Fair_is_numeric, Poor_is_numeric))
 
+# Pivot the data to long format
+Health_long <- Health %>%
+  pivot_longer(
+    cols = c(Excellent, Good, Fair, Poor),
+    names_to = "Healthy",
+    values_to = "Total"
+  )
 
+# Create the ggplot
+ggplot(data = Health_long, aes(x = Year, y = Total, group = Healthy)) +
+  geom_line(aes(colour = Healthy)) +
+  labs(title = "Percentage of Americans who fear walking alone at night based on their physical health",
+       y = "% of population") +
+  theme_minimal()
 
 
 #4    GGPlot for Age
 
+# Read the data
+Age <- read_parquet("data/analysis_data/Age.parquet")
 
-## load in CSV ##
-Age <- read_csv("data/analysis_data/Age.csv")
-View(Age)
+# View the first few rows of the dataset
+head(Age)
 
-## create ggplot ##
+# Convert the age group columns to numeric and include tests to check the conversion
+Age <- Age %>%
+  mutate(
+    `18-34` = as.numeric(`18-34`),
+    `35-49` = as.numeric(`35-49`),
+    `50-64` = as.numeric(`50-64`),
+    `65+` = as.numeric(`65+`)
+  ) %>%
+  # Include tests after the transformation
+  mutate(
+    `18-34_is_numeric` = is.numeric(`18-34`),
+    `35-49_is_numeric` = is.numeric(`35-49`),
+    `50-64_is_numeric` = is.numeric(`50-64`),
+    `65+_is_numeric` = is.numeric(`65+`)
+  )
 
-### turn strings into numbers
-transform(Age, '18-34' = as.numeric('18-34')) 
-transform(Age, '35-49' = as.numeric('35-49')) 
-transform(Age, '50-64' = as.numeric('50-64')) 
-transform(Age, '50-64' = as.numeric('65+')) 
+# Check the results of the tests
+print(Age$`18-34_is_numeric`) # Test
+print(Age$`35-49_is_numeric`) # Test
+print(Age$`50-64_is_numeric`) # Test
+print(Age$`65+_is_numeric`)   # Test
 
+# Remove the test columns before plotting
+Age <- Age %>%
+  select(-c(`18-34_is_numeric`, `35-49_is_numeric`, `50-64_is_numeric`, `65+_is_numeric`))
 
-####Make 2 columns side by side into two values in one column one above the other (turn data into long format)
-Age <- Age |> 
-  pivot_longer(cols=c('18-34', '35-49', '50-64', '65+'), names_to='Party', values_to='Total')
-###### MAKE THE PLOT #######
-ggplot(data=Age, aes(x = Year, y=Total, group = Party)) +
-  geom_line(aes(colour=Party))+
-  labs(title = "Americans in favour of police backed gun permits \n based on political affiliation", y = "Total % in favour")
+# Pivot the data to long format
+Age_long <- Age %>%
+  pivot_longer(
+    cols = c(`18-34`, `35-49`, `50-64`, `65+`),
+    names_to = "Age_Group",
+    values_to = "Total"
+  )
 
+# Create the ggplot
+ggplot(data = Age_long, aes(x = Year, y = Total, group = Age_Group)) +
+  geom_line(aes(colour = Age_Group)) +
+  labs(title = "Americans in favour of police backed gun permits based on age group",
+       y = "Total % in favour") +
+  theme_minimal()
 
 
 
 
 #5    GGPlot for Race
 
-## load in CSV ##
-Race <- read_csv("data/analysis_data/Race.csv")
-View(Race)
+# Read the data
+Race <- read_parquet("data/analysis_data/Race.parquet")
 
-## create ggplot ## 
+# View the first few rows of the dataset
+head(Race)
 
-### turn strings into numbers
-transform(Race, 'White' = as.numeric('White')) 
-transform(Race, 'Black' = as.numeric('Black')) 
-transform(Race, 'Other' = as.numeric('Other')) 
+# Convert the race category columns to numeric and include tests to check the conversion
+Race <- Race %>%
+  mutate(
+    White = as.numeric(White),
+    Black = as.numeric(Black),
+    Other = as.numeric(Other)
+  ) %>%
+  # Include tests after the transformation
+  mutate(
+    White_is_numeric = is.numeric(White),
+    Black_is_numeric = is.numeric(Black),
+    Other_is_numeric = is.numeric(Other)
+  )
 
+# Check the results of the tests
+print(Race$White_is_numeric) # Test
+print(Race$Black_is_numeric) # Test
+print(Race$Other_is_numeric) # Test
 
-####Make 2 columns side by side into two values in one column one above the other (turn data into long format)
-Race <- Race |> 
-  pivot_longer(cols=c('White', 'Black', 'Other'), names_to='Race', values_to='Total')
-###### MAKE THE PLOT #######
-ggplot(data=Race, aes(x = Year, y=Total, group = Race)) +
-  geom_line(aes(colour=Race))+
-  labs(title = "Americans in feeling of safety walking at night \n based on racial identity", y = "Total % in favour")
+# Remove the test columns before plotting
+Race <- Race %>%
+  select(-c(White_is_numeric, Black_is_numeric, Other_is_numeric))
 
+# Pivot the data to long format
+Race_long <- Race %>%
+  pivot_longer(
+    cols = c(White, Black, Other),
+    names_to = "Race",
+    values_to = "Total"
+  )
 
-
-
-
-####
+# Create the ggplot
+ggplot(data = Race_long, aes(x = Year, y = Total, group = Race)) +
+  geom_line(aes(colour = Race)) +
+  labs(title = "Americans' feeling of safety walking at night based on racial identity",
+       y = "Total % feeling safe") +
+  theme_minimal()
 
