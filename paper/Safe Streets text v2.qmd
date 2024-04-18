@@ -1,7 +1,6 @@
 ---
-title: "Safe Streets paper"
-author: "Michael Shmelev"
-format: pdf
+title: "SAFE STREETS"
+format: html
 editor: visual
 ---
 
@@ -26,12 +25,6 @@ ggplot(data=fear, aes(x = Year, y = Total, group = 1)) +
   geom_line()+
   labs(title = "Percentage of feeling unsafe walking alone at night", y = "Total % of Americans in fear walking alone at night")
 
-
-
-
-
-
-
 ```
 
 ```{r}
@@ -43,6 +36,7 @@ ggplot(data=fear, aes(x = Year, y = Total, group = 1)) +
 #2    GGPlot for Gender
 ## load in parquet ##
 Gender <- read_parquet("data/analysis_data/Gender.parquet")
+
 View(Gender)
 # View the first few rows of the dataset
 head(Gender)
@@ -124,6 +118,7 @@ ggplot(data = Health_long, aes(x = Year, y = Total, group = Healthy)) +
   labs(title = "Percentage of Americans who fear walking alone at night based on their physical health",
        y = "% of population") +
   theme_minimal()
+
 
 
 ```
