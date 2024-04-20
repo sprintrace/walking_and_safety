@@ -4,6 +4,50 @@ format: html
 editor: visual
 ---
 
+##Data Source: 
+
+The study leverages data from the General Social Survey (GSS), conducted by the University of Chicago’s NORC. The GSS is a critical source of data, capturing perceptions of safety among Americans when walking alone at night. It encompasses a broad range of demographic factors, including gender, race, health, and age, providing a comprehensive dataset from 1970 to 2022.
+
+##Analytical Tools and Libraries:
+
+To analyze and interpret the GSS data, the research employs the R programming language, as updated by the R Core Team in 2024. The analysis is enriched through the use of several R libraries, each contributing unique functionalities:
+
+###ggplot2 (Wickham, 2016) for creating elegant data visualizations.
+
+###tidyverse (Wickham et al., 2019) for a cohesive collection of data manipulation tools.
+
+###readr (Wickham, Hester, and Bryan, 2022) for importing rectangular data formats.
+
+###here (Müller, 2020) for simplifying file path specification.
+
+###Tidyr (Wickham, Vaughan, and Girlich, 2024) for tidying messy datasets.
+
+###Readxl (Wickham and Bryan, 2023) for reading Excel files.
+
+###Arrow (Richardson et al., 2024) for integrating with ‘Apache Arrow’.
+
+The data is meticulously downloaded from the GSS NORC website, focusing on specific variables of interest. The R language and its associated libraries facilitate the visualization and comprehension of the data, allowing for a more profound communication of the findings to the audience.
+
+##Data Cleaning
+
+The data cleaning process involved multiple steps to prepare the survey data from individual Excel files. First, the read_excel function from the readr package was used to import each data file. Data tidying involved selecting relevant rows (slice) and potentially renaming column headers.
+
+Next, the data was reshaped from a wide format (years as columns) to a long format (years as rows) using t() and as.data.frame(). Cleaning steps addressed unwanted characters like newline characters (\\n) with sapply and gsub. In some cases, values containing additional information were separated using str_split_fixed. Finally, irrelevant columns were removed with select, and column names were adjusted using names(). These data cleaning steps were repeated for each survey file (Gender, Health, Age, and Race) with minor adjustments based on the specific data structure. The cleaned data frames were then saved as Parquet files (.parquet) using the write_parquet function for efficient storage and further analysis. Fortunately the data was already organized into easy to comprehend variable names, so there was no need to rename any of the variable names in the data cleaning process.
+
+Survey Methodology ~~Methods and Considerations~~:
+
+The General Social Survey (GSS) is a cornerstone of social science research in the United States. For nearly five decades, beginning in 1972, the GSS primarily employed in-person interviews to collect data. This traditional method offered a distinct advantage: the face-to-face interaction allowed interviewers to delve deeper into responses and clarify any ambiguities. This approach ensured rich and nuanced data collection. However, with the arrival of the COVID-19 pandemic, the GSS pivoted to online surveys from 2020 to 2021, demonstrating its adaptability in the face of unforeseen circumstances.
+
+The GSS targets a broad range of participants, focusing on English and Spanish-speaking adults over 18 residing within the US. This inclusive approach fosters a diverse pool of respondents, contributing to the comprehensiveness of the survey's findings. However, it is important to acknowledge that the GSS does exclude certain groups. Individuals who do not meet the language criteria or are unable to participate due to health limitations are not included in the survey's scope.
+
+The GSS methodology is not without its potential limitations. Changes in how participants are selected, including adjustments to the Kish grid method, could inadvertently skew the representation of specific demographic groups. Additionally, the shift to online surveys raises concerns about the potential underrepresentation of older adults who may be less comfortable with technology. This is a significant consideration, as moving to an online survey method might also lead to underrepresentation of older individuals, who may not be as digitally literate. This shift is significant as it could impact the responses among older adults, resulting in their underrepresentation.
+
+Statistical Analysis Methodology
+
+ The paper uses a time series analysis to communicate the narrowing gap in the perceived fear between the different groups interviewed. The time series analysis is a powerful tool because it communicates change through time in a truly accessible way. 
+
+To get a better understanding of the overall trend for Americans' perceived sense of safety walking alone at night, we examine the relationship Americans have to perceived safety walking along at night based on multiple different groups. The groups examined are Gender Identity (Male or Female), Racial Identity (Black, While, or Other), Age Group (18-34, 35-49, 50-64, and 65+), Health Condition (Good Health, Fair Health, and Poor Health). Based on these metrics we can examine and verify if the media’s claims and narrative is accurate to the way real Americans feel towards safety walking alone at night.
+
 ```{r}
 #| echo: false
 #| warning: false
@@ -231,5 +275,3 @@ ggplot(data = Race_long, aes(x = Year, y = Total, group = Race)) +
 
 
 ```
-
-ccc

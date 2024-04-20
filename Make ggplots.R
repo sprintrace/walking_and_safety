@@ -32,7 +32,7 @@ names(fear) <- c("Year", "Total")
 
 ggplot(data=fear, aes(x = Year, y = Total, group = 1)) +
   geom_line()+
-  labs(title = "Percentage of feeling unsafe walking alone at night", y = "Total % of Americans in fear walking alone at night")
+  labs(title = "Percentage of Americans feeling unsafe walking alone at night", y = "Total % of Americans in fear walking alone at night")
 
 
 
@@ -60,7 +60,7 @@ Gender <- Gender |>
 ###### MAKE THE PLOT #######
 ggplot(data=Gender, aes(x = Year, y=Total, group = Gender)) +
   geom_line(aes(colour=Gender))+
-  labs(title = "Percentage of American Women vs Men \n who feel unsafe outside at night", y = "Total percent of those in fear")
+  labs(title = "Percentage of American Women vs Men \n who responded 'yes' to feeling unsafe outside at night", y = "Total percent of those who responded 'yes' for fear")
 
 
 
@@ -112,7 +112,7 @@ Health_long <- Health %>%
 # Create the ggplot
 ggplot(data = Health_long, aes(x = Year, y = Total, group = Healthy)) +
   geom_line(aes(colour = Healthy)) +
-  labs(title = "Percentage of Americans who fear walking alone at night based on their physical health",
+  labs(title = "Percentage of Americans who responded yes to being afraid to walk alone at night based on their physical health",
        y = "% of population") +
   theme_minimal()
 
@@ -162,7 +162,7 @@ Age_long <- Age %>%
 # Create the ggplot
 ggplot(data = Age_long, aes(x = Year, y = Total, group = Age_Group)) +
   geom_line(aes(colour = Age_Group)) +
-  labs(title = "Americans in favour of police backed gun permits based on age group",
+  labs(title = "Percentage of Americans who fear walking alone at night based on age group",
        y = "Total % in favour") +
   theme_minimal()
 
@@ -211,7 +211,7 @@ Race_long <- Race %>%
 # Create the ggplot
 ggplot(data = Race_long, aes(x = Year, y = Total, group = Race)) +
   geom_line(aes(colour = Race)) +
-  labs(title = "Americans' feeling of safety walking at night based on racial identity",
-       y = "Total % feeling safe") +
+  labs(title = "Americans' who responded 'yes' to feeling fear walking at night based on racial identity",
+       y = "Total % feeling fear") +
   theme_minimal()
 
