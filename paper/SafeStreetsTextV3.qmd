@@ -1,7 +1,17 @@
 ---
 title: "SAFE STREETS"
-format: html
+format: pdf
 editor: visual
+author: 
+  - Michael Shmelev
+thanks: Code and data are available at:https://github.com/sprintrace/walking_and_safety
+date: today
+date-format: long
+abstract: This study explores public sentiment in the United States towards mandatory gun permits using data from the General Social Survey (GSS) conducted by the National Opinion Research Center (NORC) at the University of Chicago. The analysis focuses on how various demographics, including political affiliation, race, gender, and education level, influence opinions on gun control. The findings reveal a decrease in overall support for mandatory gun permits since 2002, with potential explanations including the 9/11 attacks and a growing cultural divide.
+bibliography: "PaperFinalBibliography.bib"
+number-sections: true
+execute:
+  echo: FALSE 
 ---
 
 # Introduction
@@ -20,21 +30,21 @@ The study leverages data from the General Social Survey (GSS), conducted by the
 
 ## Analytical Tools and Libraries:
 
-To analyze and interpret the GSS data, the research employs the R programming language, as updated by the R Core Team in 2024. The analysis is enriched through the use of several R libraries, each contributing unique functionalities:
+To analyze and interpret the GSS data, the research employs the R programming language, [@R-base]. The analysis is enriched through the use of several R libraries, each contributing unique functionalities:
 
-###### ggplot2 (Wickham, 2016) for creating elegant data visualizations.
+-   ggplot [@R-ggplot2] for creating elegant data visualizations.
 
-###### tidyverse (Wickham et al., 2019) for a cohesive collection of data manipulation tools.
+-   tidyverse [@R-tidyverse] for a cohesive collection of data manipulation tools.
 
-###### readr (Wickham, Hester, and Bryan, 2022) for importing rectangular data formats.
+-   readr [@R-readr] for importing rectangular data formats.
 
-###### here (Müller, 2020) for simplifying file path specification.
+-   here [@R-here] for simplifying file path specification.
 
-###### Tidyr (Wickham, Vaughan, and Girlich, 2024) for tidying messy datasets.
+-   Tidyr [@R-tidyr] for tidying messy datasets.
 
-###### Readxl (Wickham and Bryan, 2023) for reading Excel files.
+-   Readxl [@R-readxl] for reading Excel files.
 
-###### Arrow (Richardson et al., 2024) for integrating with ‘Apache Arrow’.
+-   Arrow [@R-arrow] for integrating with ‘Apache Arrow’.
 
 The data is meticulously downloaded from the GSS NORC website, focusing on specific variables of interest. The R language and its associated libraries facilitate the visualization and comprehension of the data, allowing for a more profound communication of the findings to the audience.
 
@@ -50,7 +60,7 @@ The General Social Survey (GSS) is a cornerstone of social science research in t
 
 The GSS targets a broad range of participants, focusing on English and Spanish-speaking adults over 18 residing within the US. This inclusive approach fosters a diverse pool of respondents, contributing to the comprehensiveness of the survey's findings. However, it is important to acknowledge that the GSS does exclude certain groups. Individuals who do not meet the language criteria or are unable to participate due to health limitations are not included in the survey's scope.
 
-The GSS methodology is not without its potential limitations. Changes in how participants are selected, including adjustments to the Kish grid method, could inadvertently skew the representation of specific demographic groups. Additionally, the shift to online surveys raises concerns about the potential underrepresentation of older adults who may be less comfortable with technology. This is a significant consideration, as moving to an online survey method might also lead to underrepresentation of older individuals, who may not be as digitally literate. This shift is significant as it could impact the responses among older adults, resulting in their underrepresentation.
+The GSS methodology is not without its potential limitations. Changes in how participants are selected, including adjustments to the Kish grid method, could inadvertently skew the representation of specific demographic groups. Additionally, the shift to online surveys raises concerns about the potential underrepresentation of older adults who may be less comfortable with technology. This is a significant consideration, as moving to an online survey method might also lead to under representation of older individuals, who may not be as digitally literate. This shift is significant as it could impact the responses among older adults, resulting in their under representation.
 
 ## Statistical Analysis Methodology
 
@@ -104,19 +114,43 @@ While this research provides valuable insights, it also highlights the need for 
 
 Ultimately, fostering a sense of security for all individuals, regardless of their demographic characteristics, is a collective responsibility. By understanding the nuances of these perceptions, policymakers, community leaders, and society as a whole can work towards creating inclusive environments where every person feels safe and empowered to navigate their surroundings without fear.
 
-```{r}
+```{}
+```
+
+<div>
+
+</div>
+
+```{r message= FALSE, warning=FALSE, echo=FALSE}
+
+#| echo: false
+#| warning: false
+#| message: false
+
+## libraries
+library(tidyr)
+library(tidyverse)
+library(here)
+library(ggplot2)
+library(readr) 
+library(readxl)
+library(arrow)
+
+```
+
+```{r message= FALSE, warning=FALSE, echo=FALSE}
 #| echo: false
 #| warning: false
 #| message: false
 
 #1    GGPlot for GunLaw (the total of all Americans in survey)
 # fear <- read_parquet("data/analysis_data/fear.parquet")
-fear <- read_parquet("C:/Users/mikes/Documents/walking_and_safety/data/analysis_data/fear.parquet")
-View(fear)
+fear <- invisible(read_parquet("C:/Users/mikes/Documents/walking_and_safety/data/analysis_data/fear.parquet"))
+#View(fear)
 
-transform(fear, 'Total Americans in Favour' = as.numeric('Total Americans in Favour')) 
+invisible(transform(fear, 'Total Americans in Favour' = as.numeric('Total Americans in Favour')))
 
-is.numeric(fear$Total.Americans.in.Favour) ## test
+# is.numeric(fear$Total.Americans.in.Favour) ## test
 
 
 
@@ -124,11 +158,13 @@ names(fear) <- c("Year", "Total")
 
 ggplot(data=fear, aes(x = Year, y = Total, group = 1)) +
   geom_line()+
-  labs(title = "Percentage of feeling unsafe walking alone at night", y = "Total % of Americans in fear walking alone at night")
+  labs(title = "Percentage of all Americans surveyed who\n feel unsafe walking alone at night", y = " % of Americans in fear walking alone at night")
+
+
 
 ```
 
-```{r}
+```{r message= FALSE, warning=FALSE, echo=FALSE}
 #| echo: false
 #| warning: false
 #| message: false
@@ -138,9 +174,9 @@ ggplot(data=fear, aes(x = Year, y = Total, group = 1)) +
 ## load in parquet ##
 Gender <- read_parquet("C:/Users/mikes/Documents/walking_and_safety/data/analysis_data/Gender.parquet")
 
-View(Gender)
+#View(Gender)
 # View the first few rows of the dataset
-head(Gender)
+#head(Gender)
 
 # Convert the 'Female' and 'Male' columns to numeric using dplyr for better readability and efficiency
 Gender <- Gender %>%
@@ -148,8 +184,8 @@ Gender <- Gender %>%
          Male = as.numeric(Male))
 
 # Check if the columns are numeric
-is.numeric(Gender$Female) # Should return TRUE
-is.numeric(Gender$Male)   # Should return TRUE
+#is.numeric(Gender$Female) # Should return TRUE
+#is.numeric(Gender$Male)   # Should return TRUE
 
 
 ####Make 2 columns side by side into two values in one column one above the other (turn data into long format)
@@ -158,14 +194,16 @@ Gender <- Gender |>
 ###### MAKE THE PLOT #######
 ggplot(data=Gender, aes(x = Year, y=Total, group = Gender)) +
   geom_line(aes(colour=Gender))+
-  labs(title = "Percentage of American Women vs Men \n who feel unsafe outside at night", y = "Total percent of those in fear")
+  labs(title = "Percentage of American Women vs Men \n who feel unsafe outside at night", y = "Total % afraid to walk alone at night")+
+  theme_minimal()+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
 
 
 
 ```
 
-```{r}
+```{r message= FALSE, warning=FALSE, echo=FALSE}
 #| echo: false
 #| warning: false
 #| message: false
@@ -177,7 +215,7 @@ ggplot(data=Gender, aes(x = Year, y=Total, group = Gender)) +
 Health <- read_parquet("C:/Users/mikes/Documents/walking_and_safety/data/analysis_data/Health.parquet")
 
 # View the first few rows of the dataset
-head(Health)
+#head(Health)
 
 # Convert the health category columns to numeric and include tests to check the conversion
 Health <- Health %>%
@@ -196,10 +234,10 @@ Health <- Health %>%
   )
 
 # Check the results of the tests
-print(Health$Excellent_is_numeric) # test
-print(Health$Good_is_numeric)      # test
-print(Health$Fair_is_numeric)      # test
-print(Health$Poor_is_numeric)      # test
+#print(Health$Excellent_is_numeric) # test
+#print(Health$Good_is_numeric)      # test
+#print(Health$Fair_is_numeric)      # test
+#print(Health$Poor_is_numeric)      # test
 
 # Remove the test columns before plotting
 Health <- Health %>%
@@ -216,9 +254,10 @@ Health_long <- Health %>%
 # Create the ggplot
 ggplot(data = Health_long, aes(x = Year, y = Total, group = Health)) +
   geom_line(aes(colour = Health)) +
-  labs(title = "Percentage of Americans who fear walking alone at night based on their physical health",
+  labs(title = "Percentage of Americans who fear walking\n alone at night based on their physical health",
        y = "% of population") +
-  theme_minimal()
+  theme_minimal()+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
 
 
@@ -236,7 +275,7 @@ ggplot(data = Health_long, aes(x = Year, y = Total, group = Health)) +
 Age <- read_parquet("C:/Users/mikes/Documents/walking_and_safety/data/analysis_data/Age.parquet")
 
 # View the first few rows of the dataset
-head(Age)
+#head(Age)
 
 # Convert the age group columns to numeric and include tests to check the conversion
 Age <- Age %>%
@@ -255,10 +294,10 @@ Age <- Age %>%
   )
 
 # Check the results of the tests
-print(Age$`18-34_is_numeric`) # Test
-print(Age$`35-49_is_numeric`) # Test
-print(Age$`50-64_is_numeric`) # Test
-print(Age$`65+_is_numeric`)   # Test
+#print(Age$`18-34_is_numeric`) # Test
+#print(Age$`35-49_is_numeric`) # Test
+#print(Age$`50-64_is_numeric`) # Test
+#print(Age$`65+_is_numeric`)   # Test
 
 # Remove the test columns before plotting
 Age <- Age %>%
@@ -275,9 +314,10 @@ Age_long <- Age %>%
 # Create the ggplot
 ggplot(data = Age_long, aes(x = Year, y = Total, group = Age_Group)) +
   geom_line(aes(colour = Age_Group)) +
-  labs(title = "Americans in favour of police backed gun permits based on age group",
-       y = "Total % in favour") +
-  theme_minimal()
+  labs(title = "Americans level of fear walking alone\n at night based on age group",
+       y = "Total % who who are scared to walk alone at night") +
+  theme_minimal()+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
 
 ```
@@ -290,7 +330,7 @@ ggplot(data = Age_long, aes(x = Year, y = Total, group = Age_Group)) +
 Race <- read_parquet("C:/Users/mikes/Documents/walking_and_safety/data/analysis_data/Race.parquet")
 
 # View the first few rows of the dataset
-head(Race)
+#head(Race)
 
 # Convert the race category columns to numeric and include tests to check the conversion
 Race <- Race %>%
@@ -307,9 +347,9 @@ Race <- Race %>%
   )
 
 # Check the results of the tests
-print(Race$White_is_numeric) # Test
-print(Race$Black_is_numeric) # Test
-print(Race$Other_is_numeric) # Test
+#print(Race$White_is_numeric) # Test
+#print(Race$Black_is_numeric) # Test
+#print(Race$Other_is_numeric) # Test
 
 # Remove the test columns before plotting
 Race <- Race %>%
@@ -326,9 +366,10 @@ Race_long <- Race %>%
 # Create the ggplot
 ggplot(data = Race_long, aes(x = Year, y = Total, group = Race)) +
   geom_line(aes(colour = Race)) +
-  labs(title = "Americans' feeling of safety walking at night based on racial identity",
+  labs(title = "Americans' feeling of safety \nwalking at night based on racial identity",
        y = "Total % feeling safe") +
-  theme_minimal()
+  theme_minimal()+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
 
 ```
