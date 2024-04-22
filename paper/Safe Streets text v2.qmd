@@ -4,6 +4,14 @@ format: html
 editor: visual
 ---
 
+# Introduction
+
+Over the past five decades, the United States has undergone significant societal changes, impacting various aspects of life, including perceptions of personal safety. Walking alone at night, a seemingly mundane activity, can evoke feelings of vulnerability and anxiety for many individuals. This research delves into Americans' evolving perceptions of safety when engaging in this routine act, leveraging data from the General Social Survey (GSS) conducted by the University of Chicago's NORC.
+
+The GSS stands as a vital source of data, capturing Americans' sentiments on a broad range of topics, including their sense of security when walking alone at night. By examining this data through the lens of demographic factors such as gender, race, health, and age, this study aims to uncover the underlying trends and potential disparities that shape individuals' perceptions of safety.
+
+Understanding how these perceptions have shifted over time and across different societal groups is crucial for informing policymaking, urban planning, and community initiatives aimed at promoting a sense of security and well-being for all citizens. This research contributes to the ongoing discourse on public safety, social equity, and the interplay between personal experiences and societal narratives.
+
 # Data
 
 ## Data Source: 
@@ -26,7 +34,7 @@ To analyze and interpret the GSS data, the research employs the R programming la
 
 ###### Readxl (Wickham and Bryan, 2023) for reading Excel files.
 
-### Arrow (Richardson et al., 2024) for integrating with ‘Apache Arrow’.
+###### Arrow (Richardson et al., 2024) for integrating with ‘Apache Arrow’.
 
 The data is meticulously downloaded from the GSS NORC website, focusing on specific variables of interest. The R language and its associated libraries facilitate the visualization and comprehension of the data, allowing for a more profound communication of the findings to the audience.
 
@@ -78,7 +86,23 @@ After examining the responses to safety perception walking alone at night it is 
 
 However, a surprising discovery from the Pew Research Institute report (CITE) was that “There were no major differences in victimization rates between male and female respondents or between those who identified as White, Black or Hispanic.”(CITE). This discovery was noteworthy on account of the findings from the General Social Survey (GSS) by the University of Chicago's NORC showing a clear gap between the feeling of safety between Black and White Americans despite continued efforts by all facets of US society working towards and succeeding in bridging the gap in race relations; it is shocking that there is a noticeable gap between perceived safety walking alone at night when comparing Black and White Americans. This gap between perceived safety for Black and White Americans could be a result of media consumption, and social media trends such as the Black Lives Matter movement which leads audiences to believe that crime affects Black Americans more than White Americans. 
 
-Furthermore, the academic article titled A history of collective resilience and collective victimhood: Two sides of the same coin that explain Black Americans' present‐day responses to oppression point out how Black Americans are more likely to think collectively, finding through ….. . qualitative analyses that when reflecting on their group's history, Black Americans spontaneously recalled instances of both collective victimhood (discrimination, violence, oppression) as well as collective resilience (resistance efforts, cultural thriving, accomplishments) (CITE). This shows that Black Americans are more likely to think of themselves in a collective group identity compared to White Americans, who tend to be more individualistic as a culture. This group identity thinking may affect Black Americans' perception of safety when walking alone at night as they are more likely to think of themselves as a collective group being oppressed or targeted for their race when compared to White Americans who would not associate their misfortune to their racial identity. In contrast to the age and race graphs, the gender and physical health graphs do not have as many interesting findings to discuss; these findings can largely be attributed to a common sense understanding of biological differences and physiological ability. Men are more secure walking alone at night due to them on average having superior bone density, muscle mass, aerobic capacity, and significantly more testosterone. All of these factors aid men in being able to better fight or flee from an assailant than a woman. These same observations hold true for the graph outlining differences in physical health and feeling safe walking alone at night. Those with a better perceived ability to fight or flee felt more safe walking alone at night.
+Furthermore, the academic article titled A history of collective resilience and collective victimhood: Two sides of the same coin that explain Black Americans' present‐day responses to oppression point out how Black Americans are more likely to think collectively, finding through qualitative analyses that when reflecting on their group's history, Black Americans spontaneously recalled instances of both collective victimhood (discrimination, violence, oppression) as well as collective resilience (resistance efforts, cultural thriving, accomplishments) (CITE). This shows that Black Americans are more likely to think of themselves in a collective group identity compared to White Americans, who tend to be more individualistic as a culture. This group identity thinking may affect Black Americans' perception of safety when walking alone at night as they are more likely to think of themselves as a collective group being oppressed or targeted for their race when compared to White Americans who would not associate their misfortune to their racial identity. In contrast to the age and race graphs, the gender and physical health graphs do not have as many interesting findings to discuss; these findings can largely be attributed to a common sense understanding of biological differences and physiological ability. Men are more secure walking alone at night due to them on average having superior bone density, muscle mass, aerobic capacity, and significantly more testosterone. All of these factors aid men in being able to better fight or flee from an assailant than a woman. These same observations hold true for the graph outlining differences in physical health and feeling safe walking alone at night. Those with a better perceived ability to fight or flee felt more safe walking alone at night.
+
+# Concluding remarks
+
+This research has shed light on the evolving perceptions of safety among Americans when walking alone at night. By analyzing data from the General Social Survey spanning over five decades, several key findings have emerged.
+
+Firstly, the data reveals a notable narrowing of the gender gap in perceived fear, with women historically reporting higher levels of insecurity compared to men. However, a substantial reduction in this gap has been observed, indicating progress towards fostering a sense of safety for all genders.
+
+Secondly, while racial disparities in perceived safety persist, there are indications of improvement, particularly in the period from 2000 to 2021. This progress, although nuanced, underscores the need for continued efforts to address the underlying factors contributing to these perceptions across racial lines.
+
+Furthermore, the interplay between self-perceived health and feelings of safety has been illuminated. Individuals with poorer self-reported health consistently express higher levels of fear, highlighting the potential correlation between health concerns and vulnerability.
+
+Notably, a striking reversal in perceived safety has emerged among different age groups. Beginning in 2006, younger Americans aged 18-34 have reported higher levels of fear compared to their older counterparts, aged 65 and above. This shift challenges traditional assumptions and warrants further examination of the factors influencing these perceptions.
+
+While this research provides valuable insights, it also highlights the need for continued exploration and dialogue. Future studies could delve deeper into the underlying social, economic, and cultural factors that shape perceptions of safety, as well as the potential impact of media narratives and technological advancements on these perceptions.
+
+Ultimately, fostering a sense of security for all individuals, regardless of their demographic characteristics, is a collective responsibility. By understanding the nuances of these perceptions, policymakers, community leaders, and society as a whole can work towards creating inclusive environments where every person feels safe and empowered to navigate their surroundings without fear.
 
 ```{r}
 #| echo: false

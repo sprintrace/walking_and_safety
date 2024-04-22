@@ -309,8 +309,17 @@ Race <- Race |>
 ####################### MUST BE PARQUET FILE NOW ##
 
 # Write to Parquet format
-write_parquet(fear, "data/analysis_data/fear.parquet")
-write_parquet(Gender, "data/analysis_data/Gender.parquet")
-write_parquet(Health, "data/analysis_data/Health.parquet")
-write_parquet(Age, "data/analysis_data/Age.parquet")
-write_parquet(Race, "data/analysis_data/Race.parquet")
+
+write_parquet(fear, "C:/Users/mikes/Documents/walking_and_safety/data/analysis_data/fear.parquet")
+write_parquet(Gender, "C:/Users/mikes/Documents/walking_and_safety/data/analysis_data/Gender.parquet")
+write_parquet(Health, "C:/Users/mikes/Documents/walking_and_safety/data/analysis_data/Health.parquet")
+write_parquet(Age, "C:/Users/mikes/Documents/walking_and_safety/data/analysis_data/Age.parquet")
+write_parquet(Race, "C:/Users/mikes/Documents/walking_and_safety/data/analysis_data/Race.parquet")
+
+#     ORIGINAL CODE DOWN HERE     #
+
+#write_parquet(fear, "data/analysis_data/fear.parquet")
+#write_parquet(Gender, "data/analysis_data/Gender.parquet")
+#write_parquet(Health, "data/analysis_data/Health.parquet")
+#write_parquet(Age, "data/analysis_data/Age.parquet")
+#write_parquet(Race, "data/analysis_data/Race.parquet")
