@@ -292,3 +292,414 @@ The data reveals a positive trend in Americans’ perceptions of neighborhood sa
 For instance, consider Figure \@ref(fig-plot) for a visual representation of this trend.
 
 In this revised paragraph, I’ve emphasized the cross-reference by mentioning “Figure \@ref(fig-plot)” explicitly. Feel free to adjust the wording to match your writing style! 😊
+
+
+
+/////////////////////////////////////////////////
+
+
+Claud AI 
+2024, 04, 23
+
+
+
+M
+I am writing code in R
+
+Sure, I can help you with writing code in R. Please provide me with the task or problem you are trying to solve, and I'll assist you with the appropriate R code and explanations.
+
+Copy
+
+
+library(tidyr) library(tidyverse) library(here) library(ggplot2) library(readr) #################################### THIS IS THE FILE WE WILL USE FOR GRAPHS #################### #1
+PASTED
+M
+Remove the ggplots from this code, only keep the test.
+
+Here's the code without the ggplot sections:
+
+r
+
+
+Copy code
+library(tidyr)
+library(tidyverse)
+library(here)
+library(ggplot2)
+library(readr)
+
+####################################      THIS IS THE FILE WE WILL USE FOR GRAPHS     ####################
+
+#1    GGPlot for fear (the total of all Americans in survey)
+fear <- read_parquet("data/analysis_data/fear.parquet")
+View(fear)
+
+transform(fear, 'Total Americans in Favour' = as.numeric('Total Americans in Favour')) 
+
+is.numeric(fear$Total.Americans.in.Favour) ## test
+
+names(fear) <- c("Year", "Total")
+
+#2    GGPlot for Gender
+## load in parquet ##
+Gender <- read_parquet("data/analysis_data/Gender.parquet")
+View(Gender)
+# View the first few rows of the dataset
+head(Gender)
+
+# Convert the 'Female' and 'Male' columns to numeric using dplyr for better readability and efficiency
+Gender <- Gender %>%
+  mutate(Female = as.numeric(Female),
+         Male = as.numeric(Male))
+
+# Check if the columns are numeric
+is.numeric(Gender$Female) # Should return TRUE
+is.numeric(Gender$Male)   # Should return TRUE
+
+####Make 2 columns side by side into two values in one column one above the other (turn data into long format)
+Gender <- Gender |>
+  pivot_longer(cols=c('Female', 'Male'), names_to='Gender', values_to='Total')
+
+#3    GGPlot for Health
+
+# Read the data
+Health <- read_parquet("data/analysis_data/Health.parquet")
+
+# View the first few rows of the dataset
+head(Health)
+
+# Convert the health category columns to numeric and include tests to check the conversion
+Health <- Health %>%
+  mutate(
+    Excellent = as.numeric(Excellent),
+    Good = as.numeric(Good),
+    Fair = as.numeric(Fair),
+    Poor = as.numeric(Poor)
+  ) %>%
+  # Include tests after the transformation
+  mutate(
+    Excellent_is_numeric = is.numeric(Excellent),
+    Good_is_numeric = is.numeric(Good),
+    Fair_is_numeric = is.numeric(Fair),
+    Poor_is_numeric = is.numeric(Poor)
+  )
+
+# Check the results of the tests
+print(Health$Excellent_is_numeric) # test
+print(Health$Good_is_numeric)      # test
+print(Health$Fair_is_numeric)      # test
+print(Health$Poor_is_numeric)      # test
+
+# Remove the test columns before plotting
+Health <- Health %>%
+  select(-c(Excellent_is_numeric, Good_is_numeric, Fair_is_numeric, Poor_is_numeric))
+
+#4    GGPlot for Age
+
+# Read the data
+Age <- read_parquet("data/analysis_data/Age.parquet")
+
+# View the first few rows of the dataset
+head(Age)
+
+# Convert the age group columns to numeric and include tests to check the conversion
+Age <- Age %>%
+  mutate(
+    `18-34` = as.numeric(`18-34`),
+    `35-49` = as.numeric(`35-49`),
+    `50-64` = as.numeric(`50-64`),
+    `65+` = as.numeric(`65+`)
+  ) %>%
+  # Include tests after the transformation
+  mutate(
+    `18-34_is_numeric` = is.numeric(`18-34`),
+    `35-49_is_numeric` = is.numeric(`35-49`),
+    `50-64_is_numeric` = is.numeric(`50-64`),
+    `65+_is_numeric` = is.numeric(`65+`)
+  )
+
+# Check the results of the tests
+print(Age$`18-34_is_numeric`) # Test
+print(Age$`35-49_is_numeric`) # Test
+print(Age$`50-64_is_numeric`) # Test
+print(Age$`65+_is_numeric`)   # Test
+
+# Remove the test columns before plotting
+Age <- Age %>%
+  select(-c(`18-34_is_numeric`, `35-49_is_numeric`, `50-64_is_numeric`, `65+_is_numeric`))
+
+#5    GGPlot for Race
+
+# Read the data
+Race <- read_parquet("data/analysis_data/Race.parquet")
+
+# View the first few rows of the dataset
+head(Race)
+
+# Convert the race category columns to numeric and include tests to check the conversion
+Race <- Race %>%
+  mutate(
+    White = as.numeric(White),
+    Black = as.numeric(Black),
+    Other = as.numeric(Other)
+  ) %>%
+  # Include tests after the transformation
+  mutate(
+    White_is_numeric = is.numeric(White),
+    Black_is_numeric = is.numeric(Black),
+    Other_is_numeric = is.numeric(Other)
+  )
+
+# Check the results of the tests
+print(Race$White_is_numeric) # Test
+print(Race$Black_is_numeric) # Test
+print(Race$Other_is_numeric) # Test
+
+# Remove the test columns before plotting
+Race <- Race %>%
+  select(-c(White_is_numeric, Black_is_numeric, Other_is_numeric))
+This code contains tests to check if the columns are numeric after converting them using as.numeric(). The is.numeric() function is used for this purpose, and the results are printed to the console using print().
+
+Copy
+
+
+Claude does not have the ability to run the code it generates yet.
+M
+now also remove the tables for fear and gender
+
+Here's the code with the tables for fear and gender removed:
+
+r
+
+
+Copy code
+library(tidyr)
+library(tidyverse)
+library(here)
+library(ggplot2)
+library(readr)
+
+####################################      THIS IS THE FILE WE WILL USE FOR GRAPHS     ####################
+
+#3    GGPlot for Health
+
+# Read the data
+Health <- read_parquet("data/analysis_data/Health.parquet")
+
+# View the first few rows of the dataset
+head(Health)
+
+# Convert the health category columns to numeric and include tests to check the conversion
+Health <- Health %>%
+  mutate(
+    Excellent = as.numeric(Excellent),
+    Good = as.numeric(Good),
+    Fair = as.numeric(Fair),
+    Poor = as.numeric(Poor)
+  ) %>%
+  # Include tests after the transformation
+  mutate(
+    Excellent_is_numeric = is.numeric(Excellent),
+    Good_is_numeric = is.numeric(Good),
+    Fair_is_numeric = is.numeric(Fair),
+    Poor_is_numeric = is.numeric(Poor)
+  )
+
+# Check the results of the tests
+print(Health$Excellent_is_numeric) # test
+print(Health$Good_is_numeric)      # test
+print(Health$Fair_is_numeric)      # test
+print(Health$Poor_is_numeric)      # test
+
+# Remove the test columns before plotting
+Health <- Health %>%
+  select(-c(Excellent_is_numeric, Good_is_numeric, Fair_is_numeric, Poor_is_numeric))
+
+#4    GGPlot for Age
+
+# Read the data
+Age <- read_parquet("data/analysis_data/Age.parquet")
+
+# View the first few rows of the dataset
+head(Age)
+
+# Convert the age group columns to numeric and include tests to check the conversion
+Age <- Age %>%
+  mutate(
+    `18-34` = as.numeric(`18-34`),
+    `35-49` = as.numeric(`35-49`),
+    `50-64` = as.numeric(`50-64`),
+    `65+` = as.numeric(`65+`)
+  ) %>%
+  # Include tests after the transformation
+  mutate(
+    `18-34_is_numeric` = is.numeric(`18-34`),
+    `35-49_is_numeric` = is.numeric(`35-49`),
+    `50-64_is_numeric` = is.numeric(`50-64`),
+    `65+_is_numeric` = is.numeric(`65+`)
+  )
+
+# Check the results of the tests
+print(Age$`18-34_is_numeric`) # Test
+print(Age$`35-49_is_numeric`) # Test
+print(Age$`50-64_is_numeric`) # Test
+print(Age$`65+_is_numeric`)   # Test
+
+# Remove the test columns before plotting
+Age <- Age %>%
+  select(-c(`18-34_is_numeric`, `35-49_is_numeric`, `50-64_is_numeric`, `65+_is_numeric`))
+
+#5    GGPlot for Race
+
+# Read the data
+Race <- read_parquet("data/analysis_data/Race.parquet")
+
+# View the first few rows of the dataset
+head(Race)
+
+# Convert the race category columns to numeric and include tests to check the conversion
+Race <- Race %>%
+  mutate(
+    White = as.numeric(White),
+    Black = as.numeric(Black),
+    Other = as.numeric(Other)
+  ) %>%
+  # Include tests after the transformation
+  mutate(
+    White_is_numeric = is.numeric(White),
+    Black_is_numeric = is.numeric(Black),
+    Other_is_numeric = is.numeric(Other)
+  )
+
+# Check the results of the tests
+print(Race$White_is_numeric) # Test
+print(Race$Black_is_numeric) # Test
+print(Race$Other_is_numeric) # Test
+
+# Remove the test columns before plotting
+Race <- Race %>%
+  select(-c(White_is_numeric, Black_is_numeric, Other_is_numeric))
+This code now only contains the sections for Health, Age, and Race. The sections for fear and gender have been removed.
+
+Copy
+
+
+Claude does not have the ability to run the code it generates yet.
+M
+rewrite all the code with these changes.
+
+Here's the rewritten code with the requested changes:
+
+r
+
+
+Copy code
+library(tidyr)
+library(tidyverse)
+library(here)
+library(ggplot2)
+library(readr)
+
+####################################      THIS IS THE FILE WE WILL USE FOR GRAPHS     ####################
+
+# Health
+health_data <- read_parquet("data/analysis_data/Health.parquet")
+head(health_data)
+
+health_data <- health_data %>%
+  mutate(across(c(Excellent, Good, Fair, Poor), as.numeric))
+
+# Print tests to check if columns are numeric
+print(is.numeric(health_data$Excellent))
+print(is.numeric(health_data$Good))
+print(is.numeric(health_data$Fair))
+print(is.numeric(health_data$Poor))
+
+# Age
+age_data <- read_parquet("data/analysis_data/Age.parquet")
+head(age_data)
+
+age_data <- age_data %>%
+  mutate(across(c(`18-34`, `35-49`, `50-64`, `65+`), as.numeric))
+
+# Print tests to check if columns are numeric
+print(is.numeric(age_data$`18-34`))
+print(is.numeric(age_data$`35-49`))
+print(is.numeric(age_data$`50-64`))
+print(is.numeric(age_data$`65+`))
+
+# Race
+race_data <- read_parquet("data/analysis_data/Race.parquet")
+head(race_data)
+
+race_data <- race_data %>%
+  mutate(across(c(White, Black, Other), as.numeric))
+
+# Print tests to check if columns are numeric
+print(is.numeric(race_data$White))
+print(is.numeric(race_data$Black))
+print(is.numeric(race_data$Other))
+This code reads in the Health, Age, and Race data from parquet files. It then converts the relevant columns to numeric using mutate and across. After the conversion, it prints the results of is.numeric tests to check if the columns are indeed numeric.
+
+The code has been rewritten to be more concise and readable. The pivot_longer operations and ggplot code have been removed as per your instructions.
+
+Copy
+
+
+Claude does not have the ability to run the code it generates yet.
+#### Preamble #### # Purpose: Cleans the raw plane data recorded by two observers..... [...UPDATE THIS...] # Author: Rohan Alexander [...UPDATE THIS...] # Date: 6 April 2023 [...UPDATE THIS...] # Cont
+PASTED
+M
+tell me what this code does
+
+This code performs data cleaning and preprocessing on survey data related to Americans' fear of walking alone at night. The data is read from Parquet files and processed using the tidyverse and ggplot2 libraries in R. Here's a breakdown of what the code does:
+
+Fear Data
+Reads a Parquet file containing the overall fear data for all Americans.
+Converts the 'Total Americans in Favour' column to numeric.
+Tests if the column is numeric.
+Renames the columns to 'Year' and 'Total'.
+Gender Data
+Reads a Parquet file containing fear data by gender (Female and Male).
+Converts the 'Female' and 'Male' columns to numeric.
+Tests if the columns are numeric.
+Pivots the data to a long format, combining 'Female' and 'Male' into one 'Total' column with a 'Gender' column indicating the gender.
+Health Data
+Reads a Parquet file containing fear data by health status (Excellent, Good, Fair, Poor).
+Converts the health category columns to numeric.
+Tests if the columns are numeric.
+Removes the test columns.
+Age Data
+Reads a Parquet file containing fear data by age groups (18-34, 35-49, 50-64, 65+).
+Converts the age group columns to numeric.
+Tests if the columns are numeric.
+Removes the test columns.
+Race Data
+Reads a Parquet file containing fear data by race (White, Black, Other).
+Converts the race category columns to numeric.
+Tests if the columns are numeric.
+Removes the test columns.
+The code appears to be preparing the data for visualization using ggplot2, although the ggplot code itself is not included in the provided snippet. The data is being cleaned, converted to the appropriate data types, and reorganized into a long format suitable for plotting.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

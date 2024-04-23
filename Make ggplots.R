@@ -18,7 +18,7 @@ library(readr)
 ####################################      THIS IS THE FILE WE WILL USE FOR GRAPHS     ####################
 
 
-#1    GGPlot for GunLaw (the total of all Americans in survey)
+#1    GGPlot for fear (the total of all Americans in survey)
 fear <- read_parquet("data/analysis_data/fear.parquet")
 View(fear)
 
@@ -66,7 +66,7 @@ ggplot(data=Gender, aes(x = Year, y=Total, group = Gender)) +
 
 
 
-#3    GGPlot for Health ////////////////////// Not Currently Working
+#3    GGPlot for Health 
 
 
 # Read the data
