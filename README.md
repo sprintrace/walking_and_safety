@@ -1,8 +1,8 @@
-# Preceptions Of Fear Within The American Population
+# Preceptions Of Fear Within The American Population when walking alone at night
 
 ## Overview
 
-This paper will examine what factors affect the preception of safety for Americans walking alone at night. This data was collected by the US General Social Survey, and spans from 1973 to 2022. The data being examined will focus on how age, health, racial identity, and gender impact an Americans feeling of safety walking alone at night in the United States. 
+This research examines the evolving perceptions of safety among Americans when walking alone at night, a topic with significant implications for overall well-being, urban planning, and policymaking. Leveraging data from the renowned General Social Survey (GSS) conducted by the University of Chicago's NORC, spanning from 1973 to 2022, the study aims to uncover trends and potential disparities in perceived safety among different demographic groups over time. By analyzing factors such as age, health, racial identity, and gender, the research explores the interplay between these variables and their influence on individuals' sense of security when engaging in this routine activity. Understanding the nuances of these perceptions is crucial for informing efforts to create inclusive environments where all citizens feel safe and empowered to navigate their surroundings without fear.
 
 ## File Structure
 
