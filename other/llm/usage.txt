@@ -24,3 +24,271 @@ Benefits of using Parquet:
 - Small file sizes: Parquet reduces file size, which is crucial for large data sets and cloud storage costs.
 - Column storage: Parquet stores data in a column layout, making it efficient for certain queries (e.g., aggregations).
 Remember to adjust the code according to your specific data and requirements! 🚀
+
+
+/////
+Co Pilot 
+2024, 04, 21
+
+You
+I am writing code in r. I want to cross refrence a graph. here is the example                                                                                                                      : {r}
+#| label: fig-fear
+#| fig-cap: "fear" using the
+Copilot
+Certainly! To cross-reference a figure in an R Markdown document, you can follow these steps:
+
+Use an Appropriate Output Format: Cross-referencing is not directly provided within the base rmarkdown package, but it’s available as an extension in the bookdown package. Therefore, you’ll need to use an output format from bookdown (e.g., html_document2, pdf_document2, or word_document2) in the YAML output field.
+Add a Caption to Your Figure: Figures without a caption won’t be numbered. Make sure to include a caption for your figure.
+Label Your Code Chunk: Provide a label for the code chunk that generates the figure. This label will serve as the identifier for referencing the figure.
+Refer to the Figure in Your Text: You can make cross-references within the text using the syntax \\@ref(type:label), where type is the environment being referenced (e.g., fig for figures) and label is the chunk label.
+Here’s an example:
+
+---
+title: Cross-referencing figures, tables, and equations
+output:
+  bookdown::html_document2: default
+  bookdown::pdf_document2: default
+---
+
+See Figure \\@ref(fig:fear).
+
+```{r fear, fig.cap="Fear using the graph", echo=FALSE}
+# Your code to generate the graph goes here
+# For example:
+plot(x = 1:10, y = rnorm(10))
+
+You can also cross-reference equations and tables using similar syntax. For more details, refer to the R Markdown Cookbook.
+
+Remember to replace the placeholder code with your actual graph-generating code. 😊
+
+
+This will create a numbered figure with the caption "Fear using the graph" and allow you to reference it elsewhere in your document. 📊👍
+
+References:
+1. Xie, Y. (2023a). *Bookdown: Authoring Books and Technical Documents with R Markdown*. [GitHub repository](https://github.com/rstudio/bookdown)
+2. [Inserting Captions and Cross References in an R Markdown Document](https://rstudio-pubs-static.s3.amazonaws.com/98310_b44bc54001af49d98a7b891d204652e2.html)
+3. [How to Create a Crosstab Using dplyr (With Examples)](https://www.statology.org/dplyr-crosstab/)
+4. [R: Cross-Tabulation](https://search.r-project.org/CRAN/refmans/summarytools/html/ctable.html)
+5. [Stack Overflow: How to Cross-Reference Tables and Plots in R Markdown](https://stackoverflow.com/questions/52462761/how-to-cross-reference-tables-and-plots-in-rmarkdown)
+
+Learn more
+1
+
+bookdown.org
+2
+rstudio-pubs-static.s3.amazonaws.com
+3
+statology.org
+4
+search.r-project.org
+5
+stackoverflow.com
+6
+github.com
+You
+Can you take the following code, and make it compatable with the following code to make it cross refrence compatable? {r}
+
+#| echo: false
+#| warning: false
+#| message: false
+
+#| label: fig-plot2
+#| fig-cap: "Plot"
+
+#2    GGPlot for Gender
+## load in parquet ##
+Gender <- read_parquet("C:/Users/mikes/Documents/walking_and_safety/data/analysis_data/Gender.parquet")
+
+#View(Gender)
+# View the first few rows of the dataset
+#head(Gender)
+
+# Convert the 'Female' and 'Male' columns to numeric using dplyr for better readability and efficiency
+Gender <- Gender %>%
+  mutate(Female = as.numeric(Female),
+         Male = as.numeric(Male))
+
+# Check if the columns are numeric
+#is.numeric(Gender$Female) # Should return TRUE
+#is.numeric(Gender$Male)   # Should return TRUE
+
+
+####Make 2 columns side by side into two values in one column one above the other (turn data into long format)
+Gender <- Gender |> 
+  pivot_longer(cols=c('Female', 'Male'), names_to='Gender', values_to='Total')
+###### MAKE THE PLOT #######
+ggplot(data=Gender, aes(x = Year, y=Total, group = Gender)) +
+  geom_line(aes(colour=Gender))+
+  labs(title = "Percentage of American Women vs Men \n who feel unsafe outside at night", y = "Total % afraid to walk alone at night")+
+  theme_minimal()+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+Copilot
+Certainly! To make your existing code cross-reference compatible, follow these steps:
+
+Use an Appropriate Output Format: To enable cross-referencing, you’ll need to use an output format from the bookdown package. In your YAML header, specify an appropriate format such as html_document2, pdf_document2, or word_document2.
+Add a Caption to Your Figure: Include a caption for your figure using the fig.cap option in your code chunk. This caption will be used for cross-referencing.
+Label Your Code Chunk: Provide a label for the code chunk that generates the figure. This label will serve as the identifier for referencing the figure.
+Refer to the Figure in Your Text: You can make cross-references within the text using the syntax \\@ref(type:label), where type is the environment being referenced (e.g., fig for figures) and label is the chunk label.
+Here’s your modified code with the necessary changes:
+
+---
+title: Cross-referencing figures in R Markdown
+output:
+  bookdown::html_document2: default
+---
+
+# GGPlot for Gender
+
+```{r fig-plot2, fig.cap="Plot", echo=FALSE}
+# Load data from parquet file
+Gender <- read_parquet("C:/Users/mikes/Documents/walking_and_safety/data/analysis_data/Gender.parquet")
+
+# Convert columns to numeric
+Gender <- Gender %>%
+  mutate(Female = as.numeric(Female),
+         Male = as.numeric(Male))
+
+# Reshape data into long format
+Gender <- Gender |> 
+  pivot_longer(cols=c('Female', 'Male'), names_to='Gender', values_to='Total')
+
+# Create the plot
+ggplot(data=Gender, aes(x = Year, y=Total, group = Gender)) +
+  geom_line(aes(colour=Gender)) +
+  labs(title = "Percentage of American Women vs Men \n who feel unsafe outside at night", y = "Total % afraid to walk alone at night") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+See Figure \@ref(fig-plot2) for the plot.
+
+
+Replace the placeholder code with your actual graph-generating code. This will create a numbered figure with the caption "Plot" and allow you to reference it elsewhere in your document. 📊👍
+
+References:
+1. Xie, Y. (2023a). *Bookdown: Authoring Books and Technical Documents with R Markdown*. [GitHub repository](https://github.com/rstudio/bookdown)
+2. [Inserting Captions and Cross References in an R Markdown Document](https://rstudio-pubs-static.s3.amazonaws.com/98310_b44bc54001af49d98a7b891d204652e2.html)
+3. [How to Create a Crosstab Using dplyr (With Examples)](https://www.statology.org/dplyr-crosstab/)
+4. [R: Cross-Tabulation](https://search.r-project.org/CRAN/refmans/summarytools/html/ctable.html)
+5. [Stack Overflow: How to Cross-Reference Tables and Plots in R Markdown](https://stackoverflow.com/questions/52462761/how-to-cross-reference-tables-and-plots-in-rmarkdown)
+
+Remember to adjust the paths and customize the plot according to your data. Happy cross-referencing! 😊
+
+Learn more
+1
+
+bookdown.org
+2
+
+rstudio-pubs-static.s3.amazonaws.com
+3
+
+statology.org
+4
+
+search.r-project.org
+5
+
+stackoverflow.com
+6
+
+github.com
++3 more
+You
+here is a working example. I want you to take inspiration from the following code that DOES work. {r}
+#| label: fig-plot
+#| fig-cap: "Plot"
+
+
+
+# Loading the data
+
+fear <- read_parquet("C:/Users/mikes/Documents/walking_and_safety/data/analysis_data/fear.parquet")
+
+# Transforming the data (if necessary)
+# fear <- transform(fear, 'Total Americans in Favour' = as.numeric('Total Americans in Favour'))
+
+# Renaming the columns for clarity
+names(fear) <- c("Year", "Total")
+
+# Creating the plot with ggplot2
+ggplot(data=fear, aes(x = Year, y = Total, group = 1)) +
+  geom_line() +
+  labs(title = "Percentage of all Americans surveyed who\n feel unsafe walking alone at night",
+       y = " % of Americans in fear walking alone at night")
+Copilot
+Certainly! Thank you for providing the working example. Let’s make your code cross-reference compatible. Here’s the modified version:
+
+---
+title: Cross-referencing figures in R Markdown
+output:
+  bookdown::html_document2: default
+---
+
+# Loading the data
+
+```{r fig-plot, fig.cap="Plot", echo=FALSE}
+# Load data from parquet file
+fear <- read_parquet("C:/Users/mikes/Documents/walking_and_safety/data/analysis_data/fear.parquet")
+
+# Transforming the data (if necessary)
+# fear <- transform(fear, 'Total Americans in Favour' = as.numeric('Total Americans in Favour'))
+
+# Renaming the columns for clarity
+names(fear) <- c("Year", "Total")
+
+# Create the plot
+ggplot(data=fear, aes(x = Year, y = Total, group = 1)) +
+  geom_line() +
+  labs(title = "Percentage of all Americans surveyed who\n feel unsafe walking alone at night",
+       y = "% of Americans in fear walking alone at night")
+
+See Figure \@ref(fig-plot) for the plot.
+
+
+Replace the placeholder code with your actual data and customize the plot according to your needs. This will create a numbered figure with the caption "Plot" and allow you to reference it elsewhere in your document. 📊👍
+
+References:
+1. Xie, Y. (2023a). *Bookdown: Authoring Books and Technical Documents with R Markdown*. [GitHub repository](https://github.com/rstudio/bookdown)
+2. [Inserting Captions and Cross References in an R Markdown Document](https://rstudio-pubs-static.s3.amazonaws.com/98310_b44bc54001af49d98a7b891d204652e2.html)
+3. [How to Create a Crosstab Using dplyr (With Examples)](https://www.statology.org/dplyr-crosstab/)
+4. [R: Cross-Tabulation](https://search.r-project.org/CRAN/refmans/summarytools/html/ctable.html)
+5. [Stack Overflow: How to Cross-Reference Tables and Plots in R Markdown](https://stackoverflow.com/questions/52462761/how-to-cross-reference-tables-and-plots-in-rmarkdown)
+
+Feel free to adjust the paths and customize the plot as needed. Happy cross-referencing! 😊
+
+Learn more
+1
+
+bookdown.org
+2
+
+rstudio-pubs-static.s3.amazonaws.com
+3
+
+statology.org
+4
+
+search.r-project.org
+5
+
+stackoverflow.com
+6
+
+github.com
++3 more
+You
+Overall trend
+
+The data shows that over the span of 50 years, Americans' perceptions of neighborhood safety have improved, as more Americans feel safe walking outdoors at night. 1992 was an evident turning point for overall safety, where the Americans' perception of safety greatly increased. This is true for every group examined, with the exception of Americans aged 18-34, who have consistently been inconsistent in their perception of safety.
+
+For example, see (@fig-plot). how can I better integrate the cross refrence into my paragraph?
+Copilot
+Certainly! To better integrate the cross-reference into your paragraph, you can explicitly refer to the figure using a sentence that incorporates the cross-reference label. Here’s an improved version of your paragraph:
+
+Overall Trend
+
+The data reveals a positive trend in Americans’ perceptions of neighborhood safety over the past 50 years. More Americans now feel safe walking outdoors at night. Notably, 1992 marked a turning point when overall safety perception significantly increased. This trend holds true across all examined groups, except for Americans aged 18-34, who have consistently shown varying perceptions of safety.
+
+For instance, consider Figure \@ref(fig-plot) for a visual representation of this trend.
+
+In this revised paragraph, I’ve emphasized the cross-reference by mentioning “Figure \@ref(fig-plot)” explicitly. Feel free to adjust the wording to match your writing style! 😊
