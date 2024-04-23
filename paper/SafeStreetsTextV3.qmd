@@ -39,10 +39,8 @@ library(arrow)
 # Introduction
 
 Over the past five decades, the United States has undergone significant societal changes, impacting various aspects of life, including perceptions of personal safety. Walking alone at night, a seemingly mundane activity, can evoke feelings of vulnerability and anxiety for many individuals. This research delves into Americans' evolving perceptions of safety when engaging in this routine act, leveraging data from the General Social Survey (GSS) conducted by the University of Chicago's NORC.
-
-The GSS stands as a vital source of data, capturing Americans' sentiments on a broad range of topics, including their sense of security when walking alone at night. By examining this data through the lens of demographic factors such as gender, race, health, and age, this study aims to uncover the underlying trends and potential disparities that shape individuals' perceptions of safety.
-
-Understanding how these perceptions have shifted over time and across different societal groups is crucial for informing policymaking, urban planning, and community initiatives aimed at promoting a sense of security and well-being for all citizens. This research contributes to the ongoing discourse on public safety, social equity, and the interplay between personal experiences and societal narratives.
+The GSS stands as a vital source of data, capturing Americans' sentiments on a broad range of topics, including their sense of security when walking alone at night. The primary estimand of this research is the perceived sense of safety felt by Americans across different demographic groups when walking alone at night, and how these perceptions have evolved over the past five decades from 1973 to 2022. By examining this data through the lens of demographic factors such as gender, race, health, and age, this study aims to uncover the underlying trends and potential disparities that shape individuals' perceptions of safety.
+Understanding how the perception of safety when walking alone at night has shifted over time and across different societal groups is crucial for informing policymaking, urban planning, and community initiatives aimed at promoting a sense of security and well-being for all citizens. This research contributes to the ongoing discourse on public safety, social equity, and the interplay between personal experiences and societal narratives.
 
 # Data
 
