@@ -1,5 +1,5 @@
 ---
-title: "The Demography of Fear: Exploring Factors Shaping Americans' Sense of Security on Evening Walks"
+title: "test"
 format:
   pdf:
     toc: true
@@ -17,6 +17,14 @@ number-sections: true
 execute:
   echo: FALSE 
 ---
+
+title: "The Demography of Fear: Exploring Factors Shaping Americans' Sense of Security on Evening Walks" format: pdf: toc: true fig-pos: H editor: visual author: Michael Shmelev - Michael Shmelev thanks: Code and data are available at:<https://github.com/sprintrace/walking_and_safety> date: today date-format: long abstract: Perceptions of personal safety, particularly when walking alone at night, have been shaped by societal changes over the past five decades. This research examines Americans' evolving sense of security through an analysis of data from the General Social Survey (GSS) conducted by the University of Chicago's NORC. By examining demographic factors such as gender, race, health, and age, the study uncovers underlying trends and potential disparities that influence perceptions of safety for a person. The findings reveal a narrowing gender gap, with women historically reporting higher levels of fear compared to men, but a substantial reduction in this gap over time. Racial disparities persist, though improvements are observed, especially from 2000 to 2021. Self-perceived health also plays a role, with individuals in poorer health consistently expressing higher levels of fear. Notably, a striking reversal occurred among age groups, with younger Americans aged 18-34 reporting higher fear levels than their older counterparts aged 65 and above, this flip happened in 2006. This research contributes to the ongoing discourse on public safety, social equity, and the interplay between personal experiences and societal narratives. By understanding the nuances of these perceptions, policymakers and community leaders can work towards creating inclusive environments where every individual feels secure and empowered to navigate their surroundings without fear.
+
+```{r message= FALSE, warning=FALSE, echo=FALSE}
+install.packages("bookdown")
+library(bookdown)
+
+```
 
 ```{r message= FALSE, warning=FALSE, echo=FALSE}
 
@@ -89,32 +97,25 @@ To get a better understanding of the overall trend for Americans' perceived sens
 
 ## Overall trend
 
-The data shows that over the span of 50 years Americans' perceptions of neighborhood safety has gotten better, as more Americans feel safe walking outdoors at night. 1992 was an evident turning point for overall safety, where the Americans' perception of safety greatly increases. This is true of every group examined, with the exception of Americans aged 18-34 who consistently been inconsistent in their perception of safety.
+The data shows that over the span of 50 years, Americans' perceptions of neighborhood safety have improved, as more Americans feel safe walking outdoors at night. 1992 was an evident turning point for overall safety, where the Americans' perception of safety greatly increased. This is true for every group examined, with the exception of Americans aged 18-34, who have consistently been inconsistent in their perception of safety.
 
-```{r message= FALSE, warning=FALSE, echo=FALSE}
-#| echo: false
-#| warning: false
-#| message: false
+As illustrated in Figure \@ref(fig:safety-trend), the trend is clear:
 
-#1    GGPlot for GunLaw (the total of all Americans in survey)
-# fear <- read_parquet("data/analysis_data/fear.parquet")
-fear <- invisible(read_parquet("C:/Users/mikes/Documents/walking_and_safety/data/analysis_data/fear.parquet"))
-#View(fear)
+```{r safety-trend, fig.cap="Trend of Americans' fear of walking alone at night over the years", message=FALSE, warning=FALSE, echo=FALSE}
+# Loading the data
+fear <- read_parquet("C:/Users/mikes/Documents/walking_and_safety/data/analysis_data/fear.parquet")
 
-invisible(transform(fear, 'Total Americans in Favour' = as.numeric('Total Americans in Favour')))
+# Transforming the data (if necessary)
+# fear <- transform(fear, 'Total Americans in Favour' = as.numeric('Total Americans in Favour'))
 
-# is.numeric(fear$Total.Americans.in.Favour) ## test
-
-
-
+# Renaming the columns for clarity
 names(fear) <- c("Year", "Total")
 
+# Creating the plot with ggplot2
 ggplot(data=fear, aes(x = Year, y = Total, group = 1)) +
-  geom_line()+
-  labs(title = "Percentage of all Americans surveyed who\n feel unsafe walking alone at night", y = " % of Americans in fear walking alone at night")
-
-
-
+  geom_line() +
+  labs(title = "Percentage of all Americans surveyed who\n feel unsafe walking alone at night",
+       y = " % of Americans in fear walking alone at night")
 ```
 
 ## Gender and walking safety

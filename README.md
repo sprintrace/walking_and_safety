@@ -4,6 +4,14 @@
 
 This research examines the evolving perceptions of safety among Americans when walking alone at night, a topic with significant implications for overall well-being, urban planning, and policymaking. Leveraging data from the renowned General Social Survey (GSS) conducted by the University of Chicago's NORC, spanning from 1973 to 2022, the study aims to uncover trends and potential disparities in perceived safety among different demographic groups over time. By analyzing factors such as age, health, racial identity, and gender, the research explores the interplay between these variables and their influence on individuals' sense of security when engaging in this routine activity. Understanding the nuances of these perceptions is crucial for informing efforts to create inclusive environments where all citizens feel safe and empowered to navigate their surroundings without fear.
 
+## Data Access for Reproducability
+
+To find and download the data used for this paper use the following website: https://gssdataexplorer.norc.org/trends 
+
+Under the heading "Civil Librities" you need to find the "Afraid to walk at night in neighborhood" from the drop-down menu. 
+
+When you access the "Afraid to walk at night in neighborhood" graphs, you will have the option to download the necessary data under the "Export Tab"
+
 ## File Structure
 
 The repo is structured as: 
