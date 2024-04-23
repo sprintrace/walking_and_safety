@@ -10,7 +10,7 @@ To find and download the data used for this paper use the following website: htt
 
 Under the heading "Civil Librities" you need to find the "Afraid to walk at night in neighborhood" from the drop-down menu. 
 
-When you access the "Afraid to walk at night in neighborhood" graphs, you will have the option to download the necessary data under the "Export Tab"
+When you access the "Afraid to walk at night in neighborhood" graphs, you will have the option to download the necessary
 
 ## File Structure
 

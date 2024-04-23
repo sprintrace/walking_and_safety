@@ -21,7 +21,7 @@ execute:
 title: "The Demography of Fear: Exploring Factors Shaping Americans' Sense of Security on Evening Walks" format: pdf: toc: true fig-pos: H editor: visual author: Michael Shmelev - Michael Shmelev thanks: Code and data are available at:<https://github.com/sprintrace/walking_and_safety> date: today date-format: long abstract: Perceptions of personal safety, particularly when walking alone at night, have been shaped by societal changes over the past five decades. This research examines Americans' evolving sense of security through an analysis of data from the General Social Survey (GSS) conducted by the University of Chicago's NORC. By examining demographic factors such as gender, race, health, and age, the study uncovers underlying trends and potential disparities that influence perceptions of safety for a person. The findings reveal a narrowing gender gap, with women historically reporting higher levels of fear compared to men, but a substantial reduction in this gap over time. Racial disparities persist, though improvements are observed, especially from 2000 to 2021. Self-perceived health also plays a role, with individuals in poorer health consistently expressing higher levels of fear. Notably, a striking reversal occurred among age groups, with younger Americans aged 18-34 reporting higher fear levels than their older counterparts aged 65 and above, this flip happened in 2006. This research contributes to the ongoing discourse on public safety, social equity, and the interplay between personal experiences and societal narratives. By understanding the nuances of these perceptions, policymakers and community leaders can work towards creating inclusive environments where every individual feels secure and empowered to navigate their surroundings without fear.
 
 ```{r message= FALSE, warning=FALSE, echo=FALSE}
-install.packages("bookdown")
+##install.packages("bookdown")
 library(bookdown)
 
 ```
@@ -99,10 +99,24 @@ To get a better understanding of the overall trend for Americans' perceived sens
 
 The data shows that over the span of 50 years, Americans' perceptions of neighborhood safety have improved, as more Americans feel safe walking outdoors at night. 1992 was an evident turning point for overall safety, where the Americans' perception of safety greatly increased. This is true for every group examined, with the exception of Americans aged 18-34, who have consistently been inconsistent in their perception of safety.
 
-As illustrated in Figure \@ref(fig:safety-trend), the trend is clear:
+For example, see (@fig-plot).
 
-```{r safety-trend, fig.cap="Trend of Americans' fear of walking alone at night over the years", message=FALSE, warning=FALSE, echo=FALSE}
+```{}
+```
+
+```{}
+```
+
+```{}
+```
+
+```{r}
+#| label: fig-plot
+#| fig-cap: "Plot"
+
+
 # Loading the data
+
 fear <- read_parquet("C:/Users/mikes/Documents/walking_and_safety/data/analysis_data/fear.parquet")
 
 # Transforming the data (if necessary)
@@ -122,11 +136,11 @@ ggplot(data=fear, aes(x = Year, y = Total, group = 1)) +
 
 Gender significantly influences Americans’ perception of safety when walking alone at night, with women historically feeling less secure. In 1973, the graph indicates that 58% of women reported feeling unsafe, a stark contrast to the 20% of men who felt the same. Fast forward to 2014, and the data presents an encouraging shift: the percentage of women who felt unsafe has decreased to 38%, while the percentage for men has seen a slight decline to 22%. This change represents a narrowing of the gender gap by 20 percentage points, from an initial 38 points down to 16 points. In relative terms, this equates to a 53% reduction in the gap of perceived fear among American women. This substantial decrease is a testament to the strides made in enhancing the sense of security for women, and it underscores the importance of continued efforts to foster an environment where all individuals can feel safe, regardless of gender.
 
-```{r message= FALSE, warning=FALSE, echo=FALSE}
-#| echo: false
-#| warning: false
-#| message: false
+For example, see (@fig-plot2).
 
+```{r}
+#| label: fig-plot2
+#| fig-cap: "Plot2"
 
 #2    GGPlot for Gender
 ## load in parquet ##
@@ -156,16 +170,20 @@ ggplot(data=Gender, aes(x = Year, y=Total, group = Gender)) +
   theme_minimal()+
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
+```
 
-
-
+```{}
 ```
 
 ## Race and walking safety
 
 While the data does not exhibit the same level of consistency as observed in the gender-focused analysis, there is a discernible trend indicating that Americans, particularly those from historically marginalized racial groups, report feeling safer walking alone at night in the period from 2000 to 2021, compared to the two decades prior. This observation is supported by a marked decrease in the percentage of ‘yes’ responses to fear among these groups, as evidenced by the graph. The relationship between race and perceived safety, while indicative of societal progress, does not parallel the magnitude of change observed in the male-female dichotomy. The nuanced progress in racial terms suggests that while strides have been made, the journey towards equitable safety perceptions across racial lines continues to face complex challenges. This comparison underscores the multifaceted nature of progress and highlights the need for continued efforts to address the underlying factors contributing to these perceptions.
 
+For example, see (@fig-plot3).
+
 ```{r}
+#| label: fig-plot3
+#| fig-cap: "Plot3"
 
 #5    GGPlot for Race
 
@@ -215,16 +233,21 @@ ggplot(data = Race_long, aes(x = Year, y = Total, group = Race)) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
 
+
+```
+
+```{}
 ```
 
 ## Health and walking safety
 
 The data presents a compelling narrative on the interplay between self-perceived health and feelings of safety in the context of walking alone at night. Individuals who consider their health to be in a poorer state consistently report higher levels of fear, highlighting a potential correlation between health concerns and vulnerability. Yearly fluctuations are evident across all categories, yet there is no significant long-term trend, suggesting that the sentiment of fear has remained relatively unchanged over the decades. Those in better health categories report less fear, which may reflect a greater sense of personal security or mobility.
 
-```{r message= FALSE, warning=FALSE, echo=FALSE}
-#| echo: false
-#| warning: false
-#| message: false
+For example, see (@fig-plot4).
+
+```{r}
+#| label: fig-plot4
+#| fig-cap: "Plot4"
 
 #3    GGPlot for Health ////////////////////// Not Currently Working
 
@@ -281,14 +304,18 @@ ggplot(data = Health_long, aes(x = Year, y = Total, group = Health)) +
 
 ```
 
+```{}
+```
+
 ## Age and walking safety
 
 The graph presented in the research paper provides a compelling visual representation of the varying perceptions of safety experienced by different age groups when walking alone at night. It is particularly noteworthy that the vertical axis measures the percentage of individuals who affirmatively express fear during such circumstances. A striking trend emerges from the data: beginning in 2006, the younger demographic, specifically those aged 18-34, began to report higher levels of fear compared to their older counterparts, aged 65 and above. This reversal in perceived safety persisted consistently through to 2022, signaling a significant shift in the sense of security felt by these age groups over time.
 
+For example, see (@fig-plot5).
+
 ```{r}
-#| echo: false
-#| warning: false
-#| message: false
+#| label: fig-plot5
+#| fig-cap: "Plot5"
 
 
 #4    GGPlot for Age
@@ -341,7 +368,9 @@ ggplot(data = Age_long, aes(x = Year, y = Total, group = Age_Group)) +
   theme_minimal()+
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
+```
 
+```{}
 ```
 
 # Discussion
